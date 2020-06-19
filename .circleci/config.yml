@@ -10,5 +10,6 @@ jobs:
       - run: make clean
       - run: make test
       - run: make lint
+      - run: sh -c 'GOPROXY="https://proxy.golang.org" GO111MODULE=on go get "github.com/HeRCLab/wavegen" || true'
 
 
