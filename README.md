@@ -1,6 +1,6 @@
 # WaveGen
 
-[![HeRCLab](https://circleci.com/gh/HeRCLab/wavegen.svg?style=svg)](https://app.circleci.com/pipelines/github/HeRCLab/wavegen?branch=master) [![HeRCLab](https://goreportcard.com/badge/github.com/HeRCLab/wavegen)](https://goreportcard.com/report/github.com/HeRCLab/wavegen)
+[![HeRCLab](https://circleci.com/gh/HeRCLab/wavegen.svg?style=svg)](https://app.circleci.com/pipelines/github/HeRCLab/wavegen?branch=master) [![HeRCLab](https://goreportcard.com/badge/github.com/HeRCLab/wavegen)](https://goreportcard.com/report/github.com/HeRCLab/wavegen) [![go.dev reference](https://img.shields.io/badge/go.dev-reference-007d9c?logo=go&logoColor=white&style=flat-square)](https://pkg.go.dev/github.com/herclab/wavegen)
 
 This tool is used to generate composite waves as test data for one of our
 projects. It allows the user to specify a collection of noise levels,
