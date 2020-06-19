@@ -32,7 +32,7 @@ cd "$TEMP"
 
 printf "Synthetic wave generation tool\n" | sudo checkinstall -D --install=no --gzman --strip --nodoc --pkgrelease "$VERSION" --pkgname wavegen
 sudo chown "$(whoami)" *.deb
-mv *.deb "$PROJ/release"
+mv *.deb "$PROJ/release/$RELEASENAME.deb"
 
 ls -lah
 
