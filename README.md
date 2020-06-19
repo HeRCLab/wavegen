@@ -9,6 +9,11 @@ noise, then sums them together for output in a standard format.
 
 ## Installation
 
+### From Binary
+
+Download the `.deb` or generic tarball binaries from the GitHub releases page
+and install as appropriate.
+
 ### From Source
 
 Run `go install ./cmd/wavegen/...`, this will install wavegen into your
@@ -26,12 +31,20 @@ Pre-requisites:
 * help2man
 * ronn
 * checkinstall
+* gnuplot
 
-On Ubuntu 20.04: `sudo apt insttall help2man ronn golang-go checkinstall`
+On Ubuntu 20.04: `sudo apt insttall help2man ronn golang-go checkinstall gnuplot`
 
 Run `./build_release.sh`, you must have permission to run commands with `sudo`.
 This will generate a generic binary tarball, as well as a Debian binary package
 package.
+
+**NOTE**: attempting to compile a release without having `gnuplot` install may
+cause `checkinstall` to fail with inscrutable errors.
+
+**NOTE**: it is rare one would want to do this manually, the CI will
+automatically generate and upload binaries for tagged releases matching `x.y.z`
+format.
 
 ## Usage
 
@@ -42,3 +55,4 @@ See `man wavegen`.
 ## License
 
 [LICENSE](./LICENSE)
+

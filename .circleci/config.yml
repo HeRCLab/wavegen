@@ -1,5 +1,16 @@
 version: 2
 
+workflows:
+  version: 2
+  main:
+    jobs:
+      - build
+      - publish-github-release:
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^\d+\.\d+\.\d+$/
 jobs:
   build:
     docker:
@@ -12,4 +23,17 @@ jobs:
       - run: make lint
       - run: sh -c 'GOPROXY="https://proxy.golang.org" GO111MODULE=on go get "github.com/HeRCLab/wavegen" || true'
 
-
+  publish-github-release:
+      docker:
+        - image: ubuntu:focal
+      steps:
+        - checkout
+        - run: apt-get update
+        - run: sh -c 'DEBIAN_FRONTEND=noninteractive apt-get install -y help2man ronn checkinstall golang-go build-essential gnuplot sudo'
+        - run: ./build_release.sh
+        - run:
+            name: "Publish Release on GitHub"
+            command: |
+              go get github.com/tcnksm/ghr
+              VERSION=$(./build/bin/wavegen --version | cut -d' ' -f2 | tr -d 'v')
+              ~/go/bin/ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} -delete ${VERSION} ./release
