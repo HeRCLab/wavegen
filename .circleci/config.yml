@@ -1,11 +1,14 @@
 version: 2
 
-jobs:
-  build:
+executors:
+  linux:
     docker:
       - image: circleci/golang:1.14
       - image: circleci/golang:1.13
       - image: circleci/golang:latest
+
+jobs:
+  build:
     steps:
       - checkout
       - run: go get -u golang.org/x/lint/golint
