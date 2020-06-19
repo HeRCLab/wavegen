@@ -9,6 +9,9 @@ executors:
 
 jobs:
   test:
+    parameters:
+      os:
+        type: executor
     steps:
       - checkout
       - run: go get -u golang.org/x/lint/golint
@@ -16,3 +19,11 @@ jobs:
       - run: make test
       - run: make lint
 
+
+workflows:
+  all-tests:
+    jobs:
+       -test:
+         matrix:
+           parameters:
+             os: [linux]
