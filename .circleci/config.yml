@@ -1,18 +1,29 @@
-version: 2.1
-
-executors:
-  linux:
-    docker:
-      - image: circleci/golang:1.14
-      - image: circleci/golang:1.13
-      - image: circleci/golang:latest
+version: 2
 
 jobs:
-  test:
-    parameters:
-      os:
-        type: executor
-    executor: << parameters.os >>
+  test-1.13:
+    docker:
+      - image: circleci/golang:1.13
+    steps:
+      - checkout
+      - run: go get -u golang.org/x/lint/golint
+      - run: make clean
+      - run: make test
+      - run: make lint
+
+  test-1.14:
+    docker:
+      - image: circleci/golang:1.14
+    steps:
+      - checkout
+      - run: go get -u golang.org/x/lint/golint
+      - run: make clean
+      - run: make test
+      - run: make lint
+
+  test-latest:
+    docker:
+      - image: circleci/golang:latest
     steps:
       - checkout
       - run: go get -u golang.org/x/lint/golint
@@ -21,10 +32,3 @@ jobs:
       - run: make lint
 
 
-workflows:
-  all-tests:
-    jobs:
-       - test:
-         matrix:
-           parameters:
-             os: [linux]
