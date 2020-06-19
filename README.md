@@ -198,6 +198,13 @@ SIGNAL DATA SUMMARY:
           -20.28     ┤
 ```
 
+## Future Work
+
+* Implement support for re-sampling a file's data using the
+  `signal.Interpolate` method. This would be useful when working with
+  parameter-free files.
+
+* Implement subcommands to remove the parameter or data sections from a file.
 
 ## License
 
