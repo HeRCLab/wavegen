@@ -8,6 +8,7 @@ jobs:
       - image: circleci/golang:latest
     steps:
       - checkout
+      - run: go get -u golang.org/x/lint/golint
       - run: make clean
       - run: make test
       - run: make lint
