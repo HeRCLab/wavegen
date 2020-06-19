@@ -128,4 +128,4 @@ Jason Bakos, Philip Conrad, Charles Daniels, All Rights Reserved.
 
 ## SEE ALSO
 
-wavegen(1), wavegen-generate(1), wavegen(4)
+wavegen(1), wavegen-view(1), wavegen-generate(1), wavegen(4)
