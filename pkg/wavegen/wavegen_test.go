@@ -249,7 +249,7 @@ func TestNoise(t *testing.T) {
 
 	for i, c := range cases {
 		values := make([]float64, runcount)
-		for j, _ := range values {
+		for j := range values {
 			var err error
 			values[j], err = w.Noise(c.index)
 			if err != nil {

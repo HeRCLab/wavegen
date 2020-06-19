@@ -13,6 +13,9 @@ component is intended to describe the provenance of the data contained. Files
 containing only parameters are mostly useful as an alternate way of providing
 those parameters to the generator.
 
+**NOTE**: all field names are case insensitive, clients *must* support any
+casing of field names.
+
 * `version` -- integer -- Specifies the wavegen format version, currently `0`.
   Compliant clients should refuse to process files which have a version higher
   than they support.

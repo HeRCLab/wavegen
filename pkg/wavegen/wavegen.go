@@ -64,9 +64,9 @@ type WaveParameters struct {
 // that T ans S are the same size.
 type Signal struct {
 	// signal values
-	S []float64
+	S []float64 `json:"samples"`
 
-	T []float64
+	T []float64 `json:"times"`
 
 	// sample rate in Hz, note that this is set by the caller, this library
 	// cannot guarantee the accuracy of this value
@@ -270,9 +270,8 @@ func (w *WaveParameters) Noise(index int) (float64, error) {
 
 	if index == -1 {
 		return w.GlobalNoiseMagnitude * v, nil
-	} else {
-		return w.NoiseMagnitudes[index] * v, nil
 	}
+	return w.NoiseMagnitudes[index] * v, nil
 }
 
 // GenerateSyntheticData generates a signal which is a composition of several
