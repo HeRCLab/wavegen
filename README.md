@@ -121,12 +121,18 @@ SIGNAL DATA SUMMARY:
 $ wavegen view -i noisy.json
 ```
 
+![noisy.svg](./noisy.svg)
+
 ### Example: Adding Signal Components
 
 The parameters component of a previously saved JSON file can be augmented by
 passing it as input to the `-l` flag of `wavegen generate`. Lets suppose we
 wanted to augment the `noisy.json` file from the previous example by changing
 the duration to 2 seconds and adding a new signal component...
+
+**NOTE**: when using `wavegen generate` in this fashion, only the `parameters`
+field of the JSON file is used, the data is fully re-generated from scratch
+with the new set of parameters.
 
 ```
 $ wavegen generate -d 2 -f 23 -p 7 -a 1.5 -l noisy.json -o augmented.json
@@ -192,7 +198,6 @@ SIGNAL DATA SUMMARY:
           -20.28     ┤
 ```
 
-![noisy.svg](./noisy.svg)
 
 ## License
 
