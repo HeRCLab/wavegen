@@ -195,7 +195,10 @@ func main() {
 
 	generateDisplay := generateCmd.Flag("D", "display", &argparse.Options{Help: "Also interactively display the generated data."})
 
-	generateLoad := generateCmd.String("l", "load", &argparse.Options{Help: "Load an existing wavegen file and use it's parameters rather than the defaults. Any parameters specified on the CLI take precedence."})
+	generateLoad := generateCmd.String("l", "load",
+		&argparse.Options{
+			Help: "Load an existing wavegen file and use it's parameters rather than the defaults. Any parameters specified on the CLI take precedence. Signal components specified in the CLI are added to those already in the file.",
+		})
 
 	/***** view sub-command **********************************************/
 	viewCmd := parser.NewCommand("view", "View previously generated data")
@@ -255,22 +258,32 @@ func main() {
 
 			if defaultFrequencies {
 				param.Frequencies = loaded.Parameters.Frequencies
+			} else {
+				param.Frequencies = append(param.Frequencies, loaded.Parameters.Frequencies...)
 			}
 
 			if defaultPhases {
 				param.Phases = loaded.Parameters.Phases
+			} else {
+				param.Phases = append(param.Phases, loaded.Parameters.Frequencies...)
 			}
 
 			if defaultAmplitudes {
 				param.Amplitudes = loaded.Parameters.Amplitudes
+			} else {
+				param.Amplitudes = append(param.Amplitudes, loaded.Parameters.Frequencies...)
 			}
 
 			if defaultNoises {
 				param.Noises = loaded.Parameters.Noises
+			} else {
+				param.Noises = append(param.Noises, loaded.Parameters.Noises...)
 			}
 
 			if defaultNoiseMagnitudes {
 				param.NoiseMagnitudes = loaded.Parameters.NoiseMagnitudes
+			} else {
+				param.NoiseMagnitudes = append(param.NoiseMagnitudes, loaded.Parameters.NoiseMagnitudes...)
 			}
 
 			if defaultGlobalNoise {
@@ -279,6 +292,13 @@ func main() {
 
 			if defaultGlobalNoiseMagnitude {
 				param.GlobalNoiseMagnitude = loaded.Parameters.GlobalNoiseMagnitude
+			}
+
+			// if the user didn't specify any noise for the new
+			// frequency, go ahead and add none...
+			for (len(param.Noises) == len(param.NoiseMagnitudes)) && (len(param.Noises) < len(param.Frequencies)) {
+				param.Noises = append(param.Noises, "none")
+				param.NoiseMagnitudes = append(param.NoiseMagnitudes, 1.0)
 			}
 
 		}

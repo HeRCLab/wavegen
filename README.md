@@ -52,7 +52,7 @@ See `man wavegen`.
 
 `gnuplot` must be installed.
 
-### Example
+### Example: Basic
 
 Suppose we wished to compose three different signals, to produce an composed
 output:
@@ -119,6 +119,77 @@ SIGNAL DATA SUMMARY:
            -6.84    ┤                                                         ││
            -7.34    ┤                                                         ╰╯
 $ wavegen view -i noisy.json
+```
+
+### Example: Adding Signal Components
+
+The parameters component of a previously saved JSON file can be augmented by
+passing it as input to the `-l` flag of `wavegen generate`. Lets suppose we
+wanted to augment the `noisy.json` file from the previous example by changing
+the duration to 2 seconds and adding a new signal component...
+
+```
+$ wavegen generate -d 2 -f 23 -p 7 -a 1.5 -l noisy.json -o augmented.json
+$ wavegen summarize -i augmented.json
+SYNTHETIC WAVE PARAMETERS SUMMARY:
+
+        Sample Rate . . . . . 1000.000000
+        Offset  . . . . . . . 0.000000s
+        Duration  . . . . . . 2.000000s
+        Global Noise  . . . . none
+        |Global Noise|  . . . 0.000000
+
+        COMPONENTS:
+                1.500000 × Sin(2 × π × 23.000000 × t + 7.000000) + 1.000000 × pseudo()
+                2.000000 × Sin(2 × π × 2.000000 × t + 2.000000)
+                7.000000 × Sin(2 × π × 7.000000 × t + 7.000000)
+                13.000000 × Sin(2 × π × 13.000000 × t + 13.000000)
+
+SIGNAL DATA SUMMARY:
+
+        # of Samples . . . . . . 2000
+        Reported Sample Rate . . 1000.000000
+        Average Sample Rate  . . 1000.000000
+        Duration . . . . . . . . 1.999000s
+        Mean . . . . . . . . . . 0.494718
+        Median . . . . . . . . . 0.504328
+        Standard Deviation . . . 10.589475
+        Min  . . . . . . . . . . -21.229516
+        Max  . . . . . . . . . . 22.886851
+
+        SIGNAL DATA OVERVIEW:
+
+           21.90     ┤                               ╭╮
+           20.50     ┤                               ││
+           19.09     ┤         ╭╮                    ││
+           17.68     ┤         ││   ╭╮               ││   ╭╮
+           16.28     ┤         ││   ││          ╭╮   ││   ││                    ╭╮
+           14.87     ┤         ││   ││          ││   ││   ││                    ││
+           13.46     ┼╮   ╭╮   ││   ││          ││   ││   ││                    ││
+           12.06     ┤│   ││   ││   ││          ││   ││   ││          ╭╮   ╭╮   ││  ╭
+           10.65     ┤│   ││   ││   ││          ││   ││   ││     ╭╮╭╮ ││╭╮ ││   ││  │
+            9.25     ┤│   ││   ││   ││     ╭╮   ││   ││   ││   ╭╮││││ ││││ ││   ││  │
+            7.84     ┤╰╮  ││   ││   ││     ││   ││   ││   ││   ││││││ ││││ ││   ││╭╮│
+            6.43     ┤ │╭╮││   ││ ╭╮││ ╭╮╭╮││   ││   ││   ││   ││││││ ││││ ││╭╮ │││││
+            5.03     ┤ │││││   ││ ││││ ││││││   ││   ││   ││  ╭╯│││││ ││││ ││││ │││││
+            3.62     ┤ │││││ ╭╮││ ││││ ││││││   ││╭╮ ││   ││  │ ││││╰╮││││ ││││ │││││
+            2.22     ┼ │││││ ││││ ││││╭╯│││││ ╭╮││││ ││   ││  │ ││││ │││││ ││││ │││││
+            0.81     ┤ │││││ ││││ │││││ │││││ ││││││ ││╭╮ ││╭╮│ ││││ │││││ ││││ │││││
+           -0.60     ┤ │││││ ││││ │╰╯││ ││││╰╮│││││╰╮││││ │││││ ││││ │││││ ││││╭╯││││
+           -2.00     ┤ │││││ ││││ │  ││ ╰╯││ ││││╰╯ │││││╭╯││││ ││││ │││││ │││││ ││││
+           -3.41     ┤ ││││╰╮││││ │  ││   ││ ╰╯││   ││││││ ││││ ││╰╯ │││││ │││││ ││││
+           -4.81     ┤ ││││ │││││ │  ││   ││   ││   ││││││ ││││ ││   │││││ │││││ ││││
+           -6.22     ┤ ││││ │││││╭╯  ││   ││   ││   ││││││ ││╰╯ ││   ││╰╯│ │││││ ││││
+           -7.63     ┤ ││││ ││││││   ││   ││   ││   ││╰╯╰╯ ││   ││   ││  ╰╮│╰╯││ ││││
+           -9.03     ┤ ││││ ││││╰╯   ││   ││   ││   ╰╯     ││   ││   ││   ││  ││ ╰╯││
+          -10.44     ┤ ╰╯││ ╰╯││     ││   ││   ││          ││   ││   ││   ││  ││   ││
+          -11.85     ┤   ││   ╰╯     ││   ││   ││          ││   ││   ││   ││  ││   ╰╯
+          -13.25     ┤   ╰╯          ││   ││   ││          ││   ││   ╰╯   ╰╯  ││
+          -14.66     ┤               ││   ││   ││          ││   ││            ││
+          -16.06     ┤               ││   ││   ╰╯          ││   ││            ╰╯
+          -17.47     ┤               ╰╯   ││               ││   ╰╯
+          -18.88     ┤                    ││               ╰╯
+          -20.28     ┤
 ```
 
 ![noisy.svg](./noisy.svg)
