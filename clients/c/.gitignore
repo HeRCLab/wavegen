@@ -1,0 +1,5 @@
+*.so
+*.gch
+*.o
+a.out
+*.json

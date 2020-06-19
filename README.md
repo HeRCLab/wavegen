@@ -198,6 +198,10 @@ SIGNAL DATA SUMMARY:
           -20.28     ┤
 ```
 
+## Clients
+
+* [C client](./clients/c/)
+
 ## Future Work
 
 * Implement support for re-sampling a file's data using the
