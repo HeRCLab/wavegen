@@ -9,10 +9,6 @@ noise, then sums them together for output in a standard format.
 
 ## Installation
 
-### From Binary
-
-Simply download the `.deb` package and install with dpkg.
-
 ### From Source
 
 Run `go install ./cmd/wavegen/...`, this will install wavegen into your
@@ -34,7 +30,7 @@ Pre-requisites:
 On Ubuntu 20.04: `sudo apt insttall help2man ronn golang-go`
 
 Run `./build_release.sh`, you must have permission to run commands with `sudo`.
-This will generate a generic binary tarball, as well as a Debian source
+This will generate a generic binary tarball, as well as a Debian binary package
 package.
 
 ## Usage
