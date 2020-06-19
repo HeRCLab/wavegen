@@ -12,6 +12,7 @@ jobs:
     parameters:
       os:
         type: executor
+    executor: << parameters.os >>
     steps:
       - checkout
       - run: go get -u golang.org/x/lint/golint
