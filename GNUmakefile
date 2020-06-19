@@ -15,7 +15,7 @@ test:
 build/bin/wavegen:
 > rm -f "$@"
 > mkdir -p build/bin
-> go build -o "$@" ./cmd/wavegen/main.go
+> go build -ldflags="-s -w" -o "$@" ./cmd/wavegen/main.go
 .PHONY: build/bin/wavegen
 
 build/man/man1/wavegen.1: build/bin/wavegen
