@@ -33,7 +33,7 @@ Pre-requisites:
 * checkinstall
 * gnuplot
 
-On Ubuntu 20.04: `sudo apt insttall help2man ronn golang-go checkinstall gnuplot`
+On Ubuntu 20.04: `sudo apt install help2man ronn golang-go checkinstall gnuplot`
 
 Run `./build_release.sh`, you must have permission to run commands with `sudo`.
 This will generate a generic binary tarball, as well as a Debian binary package
