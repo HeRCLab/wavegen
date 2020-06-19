@@ -7,18 +7,37 @@ noise, then sums them together for output in a standard format.
 
 ## Installation
 
+### From Binary
+
+Simply download the `.deb` package and install with dpkg.
+
+### From Source
+
+Run `go install ./cmd/wavegen/...`, this will install wavegen into your
+`$GOPATH`.
+
+If you would prefer a system-wide installation, run `make ; sudo make install`
+(requires help2man and ronn installed).
+
+### Release
+
+To generate a release:
+
 Pre-requisites:
 * Golang version 1.13 or better
 * help2man
 * ronn
+* checkinstall
 
 On Ubuntu 20.04: `sudo apt insttall help2man ronn golang-go`
 
-**TODO**: still need to write front-end command
+Run `./build_release.sh`, you must have permission to run commands with `sudo`.
+This will generate a generic binary tarball, as well as a Debian source
+package.
 
 ## Usage
 
-**TODO**: still need to write front-end command
+See `man wavegen`.
 
 ## License
 
