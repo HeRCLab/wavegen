@@ -52,6 +52,77 @@ See `man wavegen`.
 
 `gnuplot` must be installed.
 
+### Example
+
+Suppose we wished to compose three different signals, to produce an composed
+output:
+
+```
+$ wavegen generate -d 1 -f 2 -f 7 -f 13 -p 0 -p 2 -p 5 -a 2 -a 5 -a 1 -n pseudo -n none -n none -o noisy.json
+$ wavegen summarize -i noisy.json
+SYNTHETIC WAVE PARAMETERS SUMMARY:
+
+        Sample Rate . . . . . 1000.000000
+        Offset  . . . . . . . 0.000000s
+        Duration  . . . . . . 1.000000s
+        Global Noise  . . . . none
+        |Global Noise|  . . . 0.000000
+
+        COMPONENTS:
+                2.000000 × Sin(2 × π × 2.000000 × t + 0.000000) + 1.000000 × pseudo()
+                5.000000 × Sin(2 × π × 7.000000 × t + 2.000000)
+                1.000000 × Sin(2 × π × 13.000000 × t + 5.000000)
+
+SIGNAL DATA SUMMARY:
+
+        # of Samples . . . . . . 1000
+        Reported Sample Rate . . 1000.000000
+        Average Sample Rate  . . 1000.000000
+        Duration . . . . . . . . 0.999000s
+        Mean . . . . . . . . . . 0.488862
+        Median . . . . . . . . . 0.611133
+        Standard Deviation . . . 3.873371
+        Min  . . . . . . . . . . -7.684887
+        Max  . . . . . . . . . . 7.974088
+
+        SIGNAL DATA OVERVIEW:
+
+            7.69    ┤       ╭╮                          ╭╮
+            7.19    ┤       ││                          ││
+            6.69    ┤       ││                         ╭╯│       ╭╮
+            6.19    ┤      ╭╯╰╮                        │ │      ╭╯│
+            5.69    ┤      │  │      ╭╮                │ │      │ │
+            5.19    ┤      │  │      ││                │ ╰╮     │ │
+            4.69    ┤      │  │      ││       ╭╮       │  │     │ ╰╮              ╭╮
+            4.18    ┼╮     │  │     ╭╯╰╮      │╰╮      │  │    ╭╯  │              │╰
+            3.68    ┤│     │  ╰╮    │  │      │ │      │  │    │   │              │
+            3.18    ┤╰╮    │   │    │  │      │ │     ╭╯  │    │   │      ╭╮     ╭╯
+            2.68    ┤ │    │   │    │  │      │ │     │   │    │   │     ╭╯│     │
+            2.18    ┤ │   ╭╯   │    │  │      │ │     │   │   ╭╯   │     │ │     │
+            1.68    ┤ │   │    ╰╮   │  │      │ │     │   │   │    │    ╭╯ ╰╮    │
+            1.18    ┤ │   │     │   │  │     ╭╯ ╰╮    │   ╰╮  │    │    │   │    │
+            0.68    ┤ ╰╮  │     │   │  ╰╮    │   │    │    │  │    │    │   │    │
+            0.18    ┼  │  │     │  ╭╯   │    │   │   ╭╯    │  │    │    │   │    │
+           -0.32    ┤  │  │     │  │    │    │   │   │     │ ╭╯    ╰╮  ╭╯   │   ╭╯
+           -0.83    ┤  │  │     │  │    │    │   │   │     │ │      │  │    │   │
+           -1.33    ┤  │  │     ╰╮ │    │    │   │   │     │ │      │  │    ╰╮  │
+           -1.83    ┤  ╰╮╭╯      │ │    │    │   │   │     ╰─╯      │  │     │  │
+           -2.33    ┤   ││       │ │    ╰╮   │   ╰╮ ╭╯              │  │     │  │
+           -2.83    ┤   ││       ╰╮│     │  ╭╯    │ │               │  │     │  │
+           -3.33    ┤   ╰╯        ╰╯     │  │     │ │               │  │     │  │
+           -3.83    ┤                    │  │     │╭╯               │ ╭╯     │  │
+           -4.33    ┤                    ╰╮ │     ╰╯                ╰╮│      │ ╭╯
+           -4.83    ┤                     │ │                        ││      ╰╮│
+           -5.34    ┤                     │╭╯                        ╰╯       ││
+           -5.84    ┤                     ╰╯                                  ││
+           -6.34    ┤                                                         ││
+           -6.84    ┤                                                         ││
+           -7.34    ┤                                                         ╰╯
+$ wavegen view -i noisy.json
+```
+
+![noisy.svg](./noisy.svg)
+
 ## License
 
 [LICENSE](./LICENSE)

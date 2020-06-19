@@ -319,3 +319,32 @@ func TestWavegen(t *testing.T) {
 	}
 
 }
+
+func TestAverageSampleRate(t *testing.T) {
+	eta := 0.0000001
+
+	w := &WaveParameters{
+		SampleRate:           1000,
+		Offset:               0,
+		Duration:             10,
+		Frequencies:          []float64{1},
+		Phases:               []float64{0},
+		Amplitudes:           []float64{1},
+		Noises:               []string{"none"},
+		NoiseMagnitudes:      []float64{1.0},
+		GlobalNoise:          "none",
+		GlobalNoiseMagnitude: 0.0,
+	}
+
+	sig, err := w.GenerateSyntheticData()
+
+	if err != nil {
+		t.Error(err)
+	}
+
+	asr := sig.AverageSampleRate()
+	if math.Abs(asr-1000) > eta {
+		t.Errorf("Average sample rate was %f, should have been 1000", asr)
+	}
+
+}

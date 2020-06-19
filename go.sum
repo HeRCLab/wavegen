@@ -6,6 +6,8 @@ github.com/ckitagawa/go-gnuplot v0.0.1/go.mod h1:SfxG3C/3r7/khsRwCeSyEM4XpSwMuvL
 github.com/ckitagawa/go-gnuplot v0.0.2-0.20171019215916-08da92cb7fd3/go.mod h1:SfxG3C/3r7/khsRwCeSyEM4XpSwMuvLbqEmq9iItZic=
 github.com/google/go-cmp v0.5.0 h1:/QaMHBdZ26BB3SSst0Iwl10Epc+xhTquomWX0oZEB6w=
 github.com/google/go-cmp v0.5.0/go.mod h1:v8dTdLbMG2kIc/vJvl+f65V22dbkXbowE6jgT/gNBxE=
+github.com/guptarohit/asciigraph v0.4.2 h1:PO17nwiALyoCiT8xieKNc1LSLmv9T9dSWa4rOvt0R9Y=
+github.com/guptarohit/asciigraph v0.4.2/go.mod h1:9fYEfE5IGJGxlP1B+w8wHFy7sNZMhPtn59f0RLtpRFM=
 github.com/herclab/wavegen v0.0.0-20200619122611-c375430712de h1:gTcIIEbQS3iJKAtvmPcqBRK/pSQdCqSOftYXDwvgZU8=
 github.com/kingishb/go-gnuplot v0.0.0-20180328172346-32f3e1634ed0 h1:gcczQvVAJyOLpHG7r2f4ttg9pcTgsyHqUxqsoOz9wk0=
 github.com/kingishb/go-gnuplot v0.0.0-20180328172346-32f3e1634ed0/go.mod h1:LPaRgowZ4VQW1O0eX1YVmxr09uyBJaWTU2co/qmM2ek=

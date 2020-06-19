@@ -6,6 +6,10 @@ import (
 	"fmt"
 	"math"
 	"math/rand"
+
+	"github.com/montanaflynn/stats"
+
+	"github.com/guptarohit/asciigraph"
 )
 
 // WaveParameters is used to store the parameters that generate a particular
@@ -57,6 +61,33 @@ type WaveParameters struct {
 	GlobalNoiseMagnitude float64
 }
 
+func (w *WaveParameters) Summarize() (string, error) {
+	err := w.ValidateParameters()
+	if err != nil {
+		return "", err
+	}
+
+	s := "SYNTHETIC WAVE PARAMETERS SUMMARY:\n\n"
+	s = fmt.Sprintf("%s\tSample Rate . . . . . %f\n", s, w.SampleRate)
+	s = fmt.Sprintf("%s\tOffset  . . . . . . . %fs\n", s, w.Offset)
+	s = fmt.Sprintf("%s\tDuration  . . . . . . %fs\n", s, w.Duration)
+	s = fmt.Sprintf("%s\tGlobal Noise  . . . . %s\n", s, w.GlobalNoise)
+	s = fmt.Sprintf("%s\t|Global Noise|  . . . %f\n", s, w.GlobalNoiseMagnitude)
+	s = fmt.Sprintf("%s\n\tCOMPONENTS:\n", s)
+
+	for i := range w.Frequencies {
+		if w.Noises[i] == "" || w.Noises[i] == "none" {
+			s = fmt.Sprintf("%s\t\t%f × Sin(2 × π × %f × t + %f)\n",
+				s, w.Amplitudes[i], w.Frequencies[i], w.Phases[i])
+		} else {
+			s = fmt.Sprintf("%s\t\t%f × Sin(2 × π × %f × t + %f) + %f × %s()\n",
+				s, w.Amplitudes[i], w.Frequencies[i], w.Phases[i], w.NoiseMagnitudes[i], w.Noises[i])
+		}
+	}
+
+	return s, nil
+}
+
 // Signal represents a time-series signal
 //
 // When generating or modifying a signal, you must guarantee that the T and S
@@ -71,6 +102,57 @@ type Signal struct {
 	// sample rate in Hz, note that this is set by the caller, this library
 	// cannot guarantee the accuracy of this value
 	SampleRate float64
+}
+
+func (s *Signal) Summarize() (string, error) {
+	err := s.ValidateIndex(0)
+	if err != nil {
+		return "", err
+	}
+
+	mean, err := stats.Mean(s.S)
+	if err != nil {
+		return "", err
+	}
+
+	median, err := stats.Median(s.S)
+	if err != nil {
+		return "", err
+	}
+
+	min, err := stats.Min(s.S)
+	if err != nil {
+		return "", err
+	}
+
+	max, err := stats.Max(s.S)
+	if err != nil {
+		return "", err
+	}
+
+	stdev, err := stats.StandardDeviation(s.S)
+	if err != nil {
+		return "", err
+	}
+
+	str := "SIGNAL DATA SUMMARY:\n\n"
+	str = fmt.Sprintf("%s\t# of Samples . . . . . . %d\n", str, len(s.T))
+	str = fmt.Sprintf("%s\tReported Sample Rate . . %f\n", str, s.SampleRate)
+	str = fmt.Sprintf("%s\tAverage Sample Rate  . . %f\n", str, s.AverageSampleRate())
+	str = fmt.Sprintf("%s\tDuration . . . . . . . . %fs\n", str, s.Duration())
+	str = fmt.Sprintf("%s\tMean . . . . . . . . . . %f\n", str, mean)
+	str = fmt.Sprintf("%s\tMedian . . . . . . . . . %f\n", str, median)
+	str = fmt.Sprintf("%s\tStandard Deviation . . . %f\n", str, stdev)
+	str = fmt.Sprintf("%s\tMin  . . . . . . . . . . %f\n", str, min)
+	str = fmt.Sprintf("%s\tMax  . . . . . . . . . . %f\n", str, max)
+
+	str = fmt.Sprintf("%s\n\tSIGNAL DATA OVERVIEW:\n\n", str)
+
+	graph := asciigraph.Plot(s.S, asciigraph.Height(30), asciigraph.Width(80-16), asciigraph.Offset(16))
+
+	str = fmt.Sprintf("%s%s\n", str, graph)
+
+	return str, nil
 }
 
 // Sample represents a single sample from a Signal
@@ -99,9 +181,33 @@ func (s *Signal) ValidateIndex(i int) error {
 	return nil
 }
 
+// AverageSampleRate calculates the average sample rate in Hz of the signal.
+// This can be useful when dealing with real signals, rather than those
+// generated using wavegen.
+func (s *Signal) AverageSampleRate() float64 {
+	dt := 0.0
+	count := 0
+	for i := range s.T {
+		if i == 0 {
+			continue
+		}
+
+		dt += s.T[i] - s.T[i-1]
+		count++
+	}
+
+	return 1.0 / (dt / float64(count))
+
+}
+
 // Size returns the number of samples which a Signal contains.
 func (s *Signal) Size() int {
 	return len(s.S)
+}
+
+// Duration returns the number seconds of data in the signal.
+func (s *Signal) Duration() float64 {
+	return s.T[s.Size()-1] - s.T[0]
 }
 
 // Index retrieves the ith sample value.

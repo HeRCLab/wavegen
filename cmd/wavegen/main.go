@@ -47,6 +47,30 @@ func plot(data map[string]*wavegen.Signal) {
 	}
 }
 
+func summarize(wf *wavegen.WaveFile) {
+	if wf.Parameters != nil {
+		summary, err := wf.Parameters.Summarize()
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "Failed to generate parameters summary: %v\n", err)
+			os.Exit(1)
+		}
+		fmt.Printf("%s\n", summary)
+	} else {
+		fmt.Printf("NO PARAMETER DATA\n\n")
+	}
+
+	if wf.Signal != nil {
+		summary, err := wf.Signal.Summarize()
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "Failed to generate signal summary: %v\n", err)
+			os.Exit(1)
+		}
+		fmt.Printf("%s\n", summary)
+	} else {
+		fmt.Printf("NO PARAMETER DATA\n\n")
+	}
+}
+
 func main() {
 	parser := argparse.NewParser("wavegen", "synthetic wave generation utility")
 
@@ -174,9 +198,14 @@ func main() {
 	generateLoad := generateCmd.String("l", "load", &argparse.Options{Help: "Load an existing wavegen file and use it's parameters rather than the defaults. Any parameters specified on the CLI take precedence."})
 
 	/***** view sub-command **********************************************/
-	viewCmd := parser.NewCommand("view", "view previously generated data")
+	viewCmd := parser.NewCommand("view", "View previously generated data")
 
 	viewInput := viewCmd.String("i", "input", &argparse.Options{Help: "File to view.", Required: true})
+
+	/***** summarize sub-command *****************************************/
+	summarizeCmd := parser.NewCommand("summarize", "Summarize previously generated data")
+
+	summarizeInput := summarizeCmd.String("i", "input", &argparse.Options{Help: "File to summarize.", Required: true})
 
 	err := parser.Parse(os.Args)
 	if err != nil {
@@ -302,6 +331,20 @@ func main() {
 		}
 
 		plot(map[string]*wavegen.Signal{"signal": loaded.Signal})
+
+		summarize(loaded)
+
+	} else if summarizeCmd.Happened() {
+		/***** summarize sub-command *********************************/
+
+		loaded, err := wavegen.ReadJSON(*summarizeInput)
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "Failed to load parameters file '%s': %v\n",
+				*generateLoad, err)
+			os.Exit(1)
+		}
+
+		summarize(loaded)
 
 	} else {
 		err := fmt.Errorf("no command specified")
