@@ -54,6 +54,7 @@ WaveGen. For Go code, WaveGen itself an be used directly (`import
 for other languages as well:
 
 * [C client](./clients/c/)
+* [matlab client](./clients/matlab/)
 
 ## Usage
 

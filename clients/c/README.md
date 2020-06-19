@@ -1,5 +1,7 @@
 # WaveGen C API
 
+[back to README](../../README.md)
+
 Wavegen's C API is a Cgo shared library. It is recommended to simply copy
 [`client.go`](./client.go) into your project, and add appropriate Make rules to
 generate `client.so` and `client.h`.
