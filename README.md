@@ -7,6 +7,13 @@ noise, then sums them together for output in a standard format.
 
 ## Installation
 
+Pre-requisites:
+* Golang version 1.13 or better
+* help2man
+* ronn
+
+On Ubuntu 20.04: `sudo apt insttall help2man ronn golang-go`
+
 **TODO**: still need to write front-end command
 
 ## Usage

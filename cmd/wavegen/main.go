@@ -12,6 +12,8 @@ import (
 func main() {
 	parser := argparse.NewParser("wavegen", "synthetic wave generation utility")
 
+	versionFlag := parser.Flag("v", "version", &argparse.Options{Help: "Display version number and exit."})
+
 	/****** generate sub-commands *****************************************/
 
 	generateCmd := parser.NewCommand("generate", "generate synthetic data")
@@ -42,6 +44,11 @@ func main() {
 	if err != nil {
 		fmt.Fprint(os.Stderr, parser.Usage(err))
 		os.Exit(1)
+	}
+
+	if *versionFlag {
+		fmt.Printf("wavegen v0.0.1-git")
+		os.Exit(0)
 	}
 
 	/****** generate sub-commands *****************************************/
@@ -83,6 +90,7 @@ func main() {
 				os.Exit(1)
 			}
 			fmt.Print(string(data))
+			fmt.Print("")
 		} else {
 			err := wf.WriteJSON(*generateOutput)
 			if err != nil {
