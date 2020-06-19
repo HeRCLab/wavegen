@@ -37,6 +37,8 @@ package.
 
 See `man wavegen`.
 
+`gnuplot` must be installed.
+
 ## License
 
 [LICENSE](./LICENSE)
