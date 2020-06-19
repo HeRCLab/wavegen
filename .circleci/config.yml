@@ -24,7 +24,7 @@ jobs:
 workflows:
   all-tests:
     jobs:
-       -test:
+       - test:
          matrix:
            parameters:
              os: [linux]
