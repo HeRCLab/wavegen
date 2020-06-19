@@ -5,7 +5,7 @@ BINDIR=$(PREFIX)/bin
 MANDIR=$(PREFIX)/man
 
 
-build: test build/bin/wavegen build/man/man1/wavegen.1 build/man/man1/wavegen-generate.1 build/man/man4/wavegen.4
+build: test build/bin/wavegen build/man/man1/wavegen.1 build/man/man1/wavegen-view.1 build/man/man1/wavegen-generate.1 build/man/man4/wavegen.4
 .PHONY: build
 
 test:
@@ -31,6 +31,11 @@ build/man/man1/wavegen-generate.1: build/bin/wavegen
 > mkdir -p build/man/man1
 > help2man --include=include.txt --no-info --no-discard-stderr "$< generate" > "$@"
 .PHONY: build/man/man1/wavegen-generate.1
+
+build/man/man1/wavegen-view.1: build/bin/wavegen
+> mkdir -p build/man/man1
+> help2man --include=include.txt --no-info --no-discard-stderr "$< view" > "$@"
+.PHONY: build/man/man1/wavegen-view.1
 
 install: build
 > mkdir -p "$(BINDIR)"

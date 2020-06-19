@@ -11,12 +11,48 @@ import (
 	"github.com/kingishb/go-gnuplot"
 )
 
+func plot(data map[string]*wavegen.Signal) {
+
+	p, err := gnuplot.NewPlotter("", true, false)
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error creating plot: %v\n", err)
+		os.Exit(1)
+	}
+
+	err = p.Cmd("set terminal qt")
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error setting terminal to 'qt': %v\n", err)
+		os.Exit(1)
+	}
+
+	err = p.SetStyle("lines")
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error setting plot style: %v\n", err)
+		os.Exit(1)
+	}
+
+	for title, signal := range data {
+
+		err = p.PlotXY(signal.T, signal.S, title)
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "Error plotting signal : %v\n", err)
+			os.Exit(1)
+		}
+
+		// Because `reread` won't work in this environment, we
+		// simply pause for one year instead, which works just
+		// as well. This ensures that the graph is still
+		// intractable after we exit.
+		p.Cmd("pause 31540000")
+	}
+}
+
 func main() {
 	parser := argparse.NewParser("wavegen", "synthetic wave generation utility")
 
 	versionFlag := parser.Flag("v", "version", &argparse.Options{Help: "Display version number and exit."})
 
-	/****** generate sub-commands *****************************************/
+	/****** generate sub-command *****************************************/
 
 	defaultAmplitudes := true
 	defaultPhases := true
@@ -137,6 +173,11 @@ func main() {
 
 	generateLoad := generateCmd.String("l", "load", &argparse.Options{Help: "Load an existing wavegen file and use it's parameters rather than the defaults. Any parameters specified on the CLI take precedence."})
 
+	/***** view sub-command **********************************************/
+	viewCmd := parser.NewCommand("view", "view previously generated data")
+
+	viewInput := viewCmd.String("i", "input", &argparse.Options{Help: "File to view.", Required: true})
+
 	err := parser.Parse(os.Args)
 	if err != nil {
 		fmt.Fprint(os.Stderr, parser.Usage(err))
@@ -148,7 +189,7 @@ func main() {
 		os.Exit(0)
 	}
 
-	/****** generate sub-commands *****************************************/
+	/****** generate sub-command *****************************************/
 	if generateCmd.Happened() {
 		param := &wavegen.WaveParameters{
 			SampleRate:           *generateSampleRate,
@@ -231,30 +272,7 @@ func main() {
 		}
 
 		if *generateDisplay {
-			p, err := gnuplot.NewPlotter("", true, false)
-			if err != nil {
-				fmt.Fprintf(os.Stderr, "Error creating plot: %v\n", err)
-				os.Exit(1)
-			}
-
-			err = p.Cmd("set terminal qt")
-			if err != nil {
-				fmt.Fprintf(os.Stderr, "Error setting terminal to 'qt': %v\n", err)
-				os.Exit(1)
-			}
-
-			err = p.PlotXY(wf.Signal.T, wf.Signal.S, "generated signal")
-			if err != nil {
-				fmt.Fprintf(os.Stderr, "Error plotting signal : %v\n", err)
-				os.Exit(1)
-			}
-
-			// Because `reread` won't work in this environment, we
-			// simply pause for one year instead, which works just
-			// as well. This ensures that the graph is still
-			// intractable after we exit.
-			p.Cmd("pause 31540000")
-
+			plot(map[string]*wavegen.Signal{"generated data": wf.Signal})
 		}
 
 		if *generateOutput == "-" {
@@ -272,6 +290,18 @@ func main() {
 				os.Exit(1)
 			}
 		}
+
+	} else if viewCmd.Happened() {
+		/***** view sub-command **************************************/
+
+		loaded, err := wavegen.ReadJSON(*viewInput)
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "Failed to load parameters file '%s': %v\n",
+				*generateLoad, err)
+			os.Exit(1)
+		}
+
+		plot(map[string]*wavegen.Signal{"signal": loaded.Signal})
 
 	} else {
 		err := fmt.Errorf("no command specified")

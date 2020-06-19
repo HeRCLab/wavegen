@@ -15,7 +15,7 @@ Run `go install ./cmd/wavegen/...`, this will install wavegen into your
 `$GOPATH`.
 
 If you would prefer a system-wide installation, run `make ; sudo make install`
-(requires help2man and ronn installed).
+(requires `help2man` and `ronn` installed).
 
 ### Release
 

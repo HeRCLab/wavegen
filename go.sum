@@ -3,6 +3,7 @@ github.com/akamensky/argparse v1.2.1 h1:YMYF1VMku+dnz7TVTJpYhsCXHSYCVMAIcKaBbjwb
 github.com/akamensky/argparse v1.2.1/go.mod h1:S5kwC7IuDcEr5VeXtGPRVZ5o/FdhcMlQz4IZQuw64xA=
 github.com/ckitagawa/go-gnuplot v0.0.1 h1:cx8VqMFsV24PV4gsVjiWKpD4gradQDj5spm8/TreMsE=
 github.com/ckitagawa/go-gnuplot v0.0.1/go.mod h1:SfxG3C/3r7/khsRwCeSyEM4XpSwMuvLbqEmq9iItZic=
+github.com/ckitagawa/go-gnuplot v0.0.2-0.20171019215916-08da92cb7fd3/go.mod h1:SfxG3C/3r7/khsRwCeSyEM4XpSwMuvLbqEmq9iItZic=
 github.com/google/go-cmp v0.5.0 h1:/QaMHBdZ26BB3SSst0Iwl10Epc+xhTquomWX0oZEB6w=
 github.com/google/go-cmp v0.5.0/go.mod h1:v8dTdLbMG2kIc/vJvl+f65V22dbkXbowE6jgT/gNBxE=
 github.com/herclab/wavegen v0.0.0-20200619122611-c375430712de h1:gTcIIEbQS3iJKAtvmPcqBRK/pSQdCqSOftYXDwvgZU8=
