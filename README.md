@@ -2,6 +2,8 @@
 
 [![HeRCLab](https://circleci.com/gh/HeRCLab/wavegen.svg?style=svg)](https://app.circleci.com/pipelines/github/HeRCLab/wavegen?branch=master)
 
+[![HeRCLab](https://goreportcard.com/badge/github.com/HeRCLab/wavegen)(https://goreportcard.com/report/github.com/HeRCLab/wavegen)
+
 This tool is used to generate composite waves as test data for one of our
 projects. It allows the user to specify a collection of noise levels,
 amplitudes, frequencies, and phases, and generates each requested sin wave and
