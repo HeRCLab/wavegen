@@ -9,4 +9,5 @@ require (
 	github.com/guptarohit/asciigraph v0.4.2
 	github.com/kingishb/go-gnuplot v0.0.0-20180328172346-32f3e1634ed0
 	github.com/montanaflynn/stats v0.6.3
+	gonum.org/v1/plot v0.7.0
 )

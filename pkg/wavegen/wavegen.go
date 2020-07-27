@@ -10,6 +10,8 @@ import (
 	"github.com/montanaflynn/stats"
 
 	"github.com/guptarohit/asciigraph"
+
+	"gonum.org/v1/plot/plotter"
 )
 
 // WaveParameters is used to store the parameters that generate a particular
@@ -104,6 +106,9 @@ type Signal struct {
 	SampleRate float64
 }
 
+// Declare conformity with plotter.XYer
+var _ plotter.XYer = (*Signal)(nil)
+
 // Len implements gonum's plotter.XYer interface
 func (s *Signal) Len() int {
 	return s.Size()
@@ -177,13 +182,16 @@ type Sample struct {
 
 type SampleList []Sample
 
+// Declare conformity with plotter.XYer
+var _ plotter.XYer = (SampleList)(nil)
+
 // Len implements gonum's plotter.XYer interface
 func (l SampleList) Len() int {
 	return len(l)
 }
 
 // XY implements gonum's plotter.XYer interface
-func (l SampleList) len(i int) (float64, float64) {
+func (l SampleList) XY(i int) (float64, float64) {
 	return l[i].T, l[i].S
 }
 
