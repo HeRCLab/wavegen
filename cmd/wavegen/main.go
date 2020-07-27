@@ -217,7 +217,7 @@ func main() {
 	}
 
 	if *versionFlag {
-		fmt.Printf("wavegen v0.0.3\n")
+		fmt.Printf("wavegen v0.0.4-git\n")
 		os.Exit(0)
 	}
 
