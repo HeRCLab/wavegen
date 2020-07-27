@@ -104,6 +104,16 @@ type Signal struct {
 	SampleRate float64
 }
 
+// Len implements gonum's plotter.XYer interface
+func (s *Signal) Len() int {
+	return s.Size()
+}
+
+// XY implements gonum's plotter.XYer interface
+func (s *Signal) XY(i int) (float64, float64) {
+	return s.T[i], s.T[i]
+}
+
 func (s *Signal) Summarize() (string, error) {
 	err := s.ValidateIndex(0)
 	if err != nil {
@@ -163,6 +173,18 @@ type Sample struct {
 
 	// The value component of the sample
 	S float64
+}
+
+type SampleList []Sample
+
+// Len implements gonum's plotter.XYer interface
+func (l SampleList) Len() int {
+	return len(l)
+}
+
+// XY implements gonum's plotter.XYer interface
+func (l SampleList) len(i int) (float64, float64) {
+	return l[i].T, l[i].S
 }
 
 // ValidateIndex ensures that the specified index can be retrieved from the

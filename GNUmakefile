@@ -4,7 +4,6 @@ PREFIX=/usr/local
 BINDIR=$(PREFIX)/bin
 MANDIR=$(PREFIX)/man
 
-
 build: test build/bin/wavegen build/man/man1/wavegen.1 build/man/man1/wavegen-view.1 build/man/man1/wavegen-generate.1 build/man/man4/wavegen.4
 .PHONY: build
 
