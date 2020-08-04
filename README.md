@@ -1,5 +1,8 @@
 # WaveGen
 
+**ATTENTION**: as of 2020-08-04, wavegen is now part of
+[herc-file-formats](https://github.com/HeRCLab/herc-file-formats)
+
 [![HeRCLab](https://circleci.com/gh/HeRCLab/wavegen.svg?style=svg)](https://app.circleci.com/pipelines/github/HeRCLab/wavegen?branch=master) [![HeRCLab](https://goreportcard.com/badge/github.com/HeRCLab/wavegen)](https://goreportcard.com/report/github.com/HeRCLab/wavegen) [![go.dev reference](https://img.shields.io/badge/go.dev-reference-007d9c?logo=go&logoColor=white&style=flat-square)](https://pkg.go.dev/github.com/herclab/wavegen)
 
 This tool is used to generate composite waves as test data for one of our
